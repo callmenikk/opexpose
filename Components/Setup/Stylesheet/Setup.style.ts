@@ -1,14 +1,14 @@
-import { StyleSheet, Dimensions } from "react-native";
+import { StyleSheet, Dimensions, Platform, StatusBar } from "react-native";
 
 
 export const setupStyle = StyleSheet.create({
   container: {
     width: "100%",
-    height: "100vh",
+    height: Dimensions.get("window").height,
     backgroundColor: "#000",
     overflow: "hidden",
-    padding: "0 20",
     margin: 0,
+    paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0, //Android
     display: "flex",
     alignItems: "center",
     paddingLeft: 20,
@@ -16,9 +16,9 @@ export const setupStyle = StyleSheet.create({
   },
   mainBg: {
     position: "absolute",
-    width: `${(Dimensions.get('window').width)}px`,
-    height: `${Dimensions.get("window").height}px`,
-    top: "0",
+    width: Dimensions.get('window').width,
+    height: Dimensions.get("window").height,
+    top: 0,
     left: -20,
   },
   setupEmojis: {
@@ -28,14 +28,13 @@ export const setupStyle = StyleSheet.create({
   },
   mainContent: { 
     width: "100%",
-    minHeight: "200px",
-    borderColor: "red",
+    height: 150,
     zIndex: 11,
     display: "flex",
     paddingLeft: 20,
     paddingRight: 20,
-    alignItems: "center",
     flexDirection: "column",
+    alignItems: "center"
   },
   uploadCamera: {
     width: 200,
@@ -47,7 +46,8 @@ export const setupStyle = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     flexDirection: "column",
-    borderWidth: 1
+    borderWidth: 1,
+    
   },
   inputStyles: {
     width: "100%",
@@ -58,11 +58,11 @@ export const setupStyle = StyleSheet.create({
     borderWidth: 2,
     borderColor: "#59EF57",
     transform: [{translateY: 50}],
+    backgroundColor: "#000",
     zIndex: 10
   },
   nextButton: {
-    width: "100%",
-    maxWidth: "240px",
+    width: 200,
     backgroundColor: "#59EF57",
     zIndex: 10,
     height: 50,
@@ -70,5 +70,39 @@ export const setupStyle = StyleSheet.create({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
+  },
+  photosModal: {
+    width: Dimensions.get("window").width,
+    height:(Dimensions.get("window").height - 220),
+    backgroundColor: "#0E0E0E",
+    zIndex: 12,
+    position: "absolute",
+    bottom: 0,
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+  },
+  modalHeader: {
+    width: Dimensions.get("window").width,
+    height: 50,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    position: "relative"
+  },
+  scrollPhotos: {
+    display: "flex",
+    flexWrap: "wrap",
+    borderColor: "red",
+    flexDirection: "row",
+    width: Dimensions.get("window").width,
+    padding: 10
+  },
+  client_photo: {
+    backgroundColor: "#222222",
+    borderRadius: 10,
+    alignSelf: "stretch",
+    height: 200,
+    width: 200,
+    margin: 5,
   }
 })

@@ -1,6 +1,6 @@
-import { View, Text, Image } from "react-native";
+import { View, Text, Image, StyleSheet, Dimensions, Platform, StatusBar } from "react-native";
 import { setupStyle } from "./Stylesheet/Setup.style";
-import MainBackground from "../asset/mainBackground";
+import MainBackground from "../asset/MainBackground";
 import CustomizeProfile from "./CustomizeProfile";
 
 const Setup = () => {
@@ -14,7 +14,7 @@ const Setup = () => {
         {
           transform: [{ translateX: -200 }, {rotate: "45deg"}, {translateY: -150}],
           top: 0,
-          left: 0
+          left: 0 
         }
       ]}>😈</Text>
       <Text style={[
@@ -43,9 +43,9 @@ const Setup = () => {
           source={require("./assets/opexpose_logo.png")}
           style={{
             zIndex: 10,
-            width: 380,
+            width: 250,
             borderRadius: 60,
-            height: 120
+            height: 70
           }}
         />
       </View>
