@@ -1,13 +1,14 @@
-import { Text, TouchableOpacity, TextInput } from "react-native";
+import { Text, TouchableOpacity, TextInput, Image, Platform } from "react-native";
 import { setupStyle } from "./Stylesheet/Setup.style";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faCameraRetro } from "@fortawesome/free-solid-svg-icons";
-import { useState } from "react";
-import { Platform } from "react-native";
+import { useState, FC } from "react";
 import { getAssetsAsync, usePermissions } from "expo-media-library";
 import ChoosePhotoModal from "./ChoosePhotoModal";
+import { tokenGenerator } from "../../utils/Token";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const CustomizeProfile = () => {
+const CustomizeProfile: FC<{triggerModal: (bool: boolean, text: string) => void}> = ({triggerModal}) => {
   const [focus, setFocus] = useState<boolean>(false);
   const [status, requestPermission] = usePermissions();
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -17,26 +18,56 @@ const CustomizeProfile = () => {
     profileSrcBase64: "",
     client_id: "",
   });
+  
+
+  const insertPhoto = (base64: string) => {
+    setUserInfo((prev) => {
+      return {
+        ...prev,
+        profileSrcBase64: base64,
+      };
+    });
+  };
 
   const inputHandler = (e: any) => {
     setUserInfo({
       ...userInfo,
-      username: e.target.value,
+      username: e,
     });
   };
+
+  const _handleStorageSave = async (value: typeof userInfo) => {
+    console.log(value.username);
+    
+    try {
+      if(!value.profileSrcBase64.trim() || !value.username.trim()){
+        return triggerModal(true, "Upload Picture and input username")
+      }
+
+      const generateId = {
+        ...value,
+        client_id: tokenGenerator()
+      }
+
+      await AsyncStorage.setItem('@storage_Key', JSON.stringify(generateId))
+
+    } catch (e) {
+      throw new Error(`${e}`)
+    }
+  }
 
   const hasAndroidPermission = async () => {
     await requestPermission();
 
     return status?.granted;
-    // const permission: Permission = PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE;
-    // const hasPermission: boolean = await PermissionsAndroid.check(permission);
-    // if (hasPermission) {
-    // 	return true
-    // }
+  //   const permission: Permission = PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE;
+  //   const hasPermission: boolean = await PermissionsAndroid.check(permission);
+  //   if (hasPermission) {
+  //   	return true
+  //   }
 
-    // const status = await PermissionsAndroid.request(permission);
-    // return status === PermissionsAndroid.RESULTS.GRANTED;
+  //   const status = await PermissionsAndroid.request(permission);
+  //   return status === PermissionsAndroid.RESULTS.GRANTED;
   };
 
   const savePicture = async () => {
@@ -44,28 +75,42 @@ const CustomizeProfile = () => {
       return;
     }
 
-	setIsModalVisible(true)
+    setIsModalVisible(true);
 
     await getAssetsAsync({ first: 50, mediaType: "photo" }).then((photo) => {
-		setClientPhotos(
-		  photo.assets.map((e) => {
-			return e.uri;
-		  })
-		);
-	  });
+      setClientPhotos(
+        photo.assets.map((e) => {
+          return e.uri;
+        })
+      );
+    });
   };
 
   return (
     <>
       <TouchableOpacity style={setupStyle.uploadCamera} onPress={savePicture}>
-        <FontAwesomeIcon icon={faCameraRetro} color="#59EF57" size={64} />
-        <Text
-          style={{
-            color: "#FFF",
-          }}
-        >
-          Choose Photo
-        </Text>
+        {!userInfo.profileSrcBase64 ? (
+          <>
+            <FontAwesomeIcon icon={faCameraRetro} color="#59EF57" size={64} />
+            <Text
+              style={{
+                color: "#FFF",
+              }}
+            >
+              Choose Photo
+            </Text>
+          </>
+        ) : (
+          <Image
+            style={{
+              width: "100%",
+              height: "100%",
+            }}
+            source={{
+              uri: `data:image/jpeg;base64,${userInfo.profileSrcBase64}`,
+            }}
+          />
+        )}
       </TouchableOpacity>
 
       <TextInput
@@ -82,13 +127,14 @@ const CustomizeProfile = () => {
         ]}
         placeholderTextColor="#3b3b3b"
         value={userInfo.username}
-        onChange={inputHandler}
+        onChangeText={inputHandler}
         onFocus={() => {
           setFocus(true);
         }}
         onBlur={() => setFocus(false)}
       />
       <TouchableOpacity
+        onPress={() => _handleStorageSave(userInfo)}
         style={[setupStyle.nextButton, { transform: [{ translateY: 75 }] }]}
       >
         <Text
@@ -101,7 +147,11 @@ const CustomizeProfile = () => {
         </Text>
       </TouchableOpacity>
       {isModalVisible && (
-        <ChoosePhotoModal isModalVisible clientPhotos={clientPhotos} closeModal={() => setIsModalVisible(false)}/>
+        <ChoosePhotoModal
+          clientPhotos={clientPhotos}
+          closeModal={() => setIsModalVisible(false)}
+          insertPhoto={insertPhoto}
+        />
       )}
     </>
   );

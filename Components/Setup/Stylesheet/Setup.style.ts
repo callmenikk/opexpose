@@ -47,6 +47,7 @@ export const setupStyle = StyleSheet.create({
     justifyContent: "center",
     flexDirection: "column",
     borderWidth: 1,
+    overflow: 'hidden'
     
   },
   inputStyles: {
