@@ -4,7 +4,7 @@
 
 ## About
 
-**opexpose** is mobile app game, inspiration is taken from game called **[Expose](https://apps.apple.com/us/app/exposed-whos-most-likely-to/id1553777064)**
+**opexpose** is mobile app game, inspiration is taken from game called **[Exposed](https://apps.apple.com/us/app/exposed-whos-most-likely-to/id1553777064)**
 
 ## Technologies used
 
