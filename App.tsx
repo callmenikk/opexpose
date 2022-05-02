@@ -1,10 +1,12 @@
-import { SafeAreaView, Text } from 'react-native';
-import Router from './Router/Router';
+import { SafeAreaView } from "react-native";
+import Router from "./Router/Router";
 
-export default function App() {
+const App = () => {
   return (
-    <SafeAreaView>
-      <Router />
-    </SafeAreaView>
+      <SafeAreaView>
+        <Router />
+      </SafeAreaView>
   );
 }
+
+export default App

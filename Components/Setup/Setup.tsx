@@ -1,5 +1,7 @@
-import { View, Text, Image, Platform, StatusBar } from "react-native";
-import { useState } from "react";
+import { View, Image, Platform, StatusBar } from "react-native";
+import {useNavigate} from "react-router-native"
+import { useState, useEffect } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { setupStyle } from "./Stylesheet/Setup.style";
 import MainBackground from "../asset/MainBackground";
 import Emojis from "./Emojis";
@@ -7,8 +9,24 @@ import CustomizeProfile from "./CustomizeProfile";
 import Warn from "../Alert/Warn";
 
 const Setup = () => {
-  const [warn, setWarn] = useState<boolean>(true);
+  const [warn, setWarn] = useState<boolean>(false);
   const [warnText, setWarnText] = useState("")
+  const navigate = useNavigate()
+
+  const _getUserStore = async () => {
+    try{
+      const userStore = await AsyncStorage.getItem('@user_data')
+      if(userStore != null){
+        navigate("/home")
+      }
+    }catch(e){
+      
+    }
+  }
+
+  useEffect(() => {
+  _getUserStore()
+  }, [])
 
   return (
     <View style={setupStyle.container}>

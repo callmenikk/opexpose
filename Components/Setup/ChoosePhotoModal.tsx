@@ -45,6 +45,7 @@ const ChoosePhotoModal: FC<PhotoProps> = ({ clientPhotos, closeModal, insertPhot
       <FlatGrid
         itemDimension={200}
         data={clientPhotos}
+        spacing={10}
         renderItem={({item}) => {
           return (
 						<TouchableOpacity style={setupStyle.client_photo} key={item} onPress={() => {

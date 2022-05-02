@@ -37,7 +37,6 @@ const CustomizeProfile: FC<{triggerModal: (bool: boolean, text: string) => void}
   };
 
   const _handleStorageSave = async (value: typeof userInfo) => {
-    console.log(value.username);
     
     try {
       if(!value.profileSrcBase64.trim() || !value.username.trim()){
@@ -49,7 +48,7 @@ const CustomizeProfile: FC<{triggerModal: (bool: boolean, text: string) => void}
         client_id: tokenGenerator()
       }
 
-      await AsyncStorage.setItem('@storage_Key', JSON.stringify(generateId))
+      await AsyncStorage.setItem('@user_data', JSON.stringify(generateId))
 
     } catch (e) {
       throw new Error(`${e}`)
