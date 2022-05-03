@@ -1,5 +1,6 @@
 import { Text, TouchableOpacity, TextInput, Image, Platform } from "react-native";
 import { setupStyle } from "./Stylesheet/Setup.style";
+import { useNavigate } from "react-router-native";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faCameraRetro } from "@fortawesome/free-solid-svg-icons";
 import { useState, FC } from "react";
@@ -13,6 +14,7 @@ const CustomizeProfile: FC<{triggerModal: (bool: boolean, text: string) => void}
   const [status, requestPermission] = usePermissions();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [clientPhotos, setClientPhotos] = useState<string[]>([]);
+  const navigate = useNavigate()
   const [userInfo, setUserInfo] = useState({
     username: "",
     profileSrcBase64: "",
@@ -49,6 +51,7 @@ const CustomizeProfile: FC<{triggerModal: (bool: boolean, text: string) => void}
       }
 
       await AsyncStorage.setItem('@user_data', JSON.stringify(generateId))
+      navigate("/home")
 
     } catch (e) {
       throw new Error(`${e}`)

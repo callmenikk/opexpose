@@ -1,19 +1,34 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { View, Text, TouchableOpacity, Image } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-native";
 import { State } from "../../Reducers/userData";
+import io from 'socket.io-client'; 
+import host from "../../host.json"
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { setupStyle } from "../Setup/Stylesheet/Setup.style";
 import MainBackground from "../asset/MainBackground";
 import { homeStyle } from "./Stylesheet/home.style";
-
-const Home = () => {
+import Loader from "./Loader";  
+ 
+const Home = () => {   
   const navigate = useNavigate()
   const dispatch = useDispatch()    
-  const userData = useSelector(
+  const [isLoading, setIsLoading] = useState(false)
+  const userData = useSelector( 
     (state: { userData: State }) => state.userData
-  );
+  ); 
+
+  const socket = io(host.host)
+
+  
+  useEffect(() => {
+    socket.on("@response", (msg) => { 
+      console.log(msg)
+    })
+
+    socket.emit("@port_open", "sent text")
+  }, [])
 
   const _getUserData = async () => {
     try{
@@ -46,6 +61,10 @@ const Home = () => {
 
   return (
       <View style={homeStyle.homeContainer}>
+        {
+          isLoading &&
+          <Loader />
+        }
         <View style={setupStyle.mainBg}>
           <MainBackground />
         </View>

@@ -15,6 +15,7 @@
     "@fortawesome/free-solid-svg-icons": "^6.1.1",
     "@fortawesome/react-native-fontawesome": "^0.2.7",
     "@react-native-async-storage/async-storage": "^1.17.3",
+    "@react-native-community/blur": "^3.6.0",
     "@react-native-community/cameraroll": "^4.1.2",
     "@reduxjs/toolkit": "^1.8.1",
     "expo": "~44.0.0",
@@ -25,12 +26,14 @@
     "react": "17.0.1",
     "react-dom": "17.0.1",
     "react-native": "0.64.3",
+    "react-native-animated-loader": "^0.0.9",
     "react-native-super-grid": "^4.3.0",
     "react-native-svg": "^12.3.0",
     "react-native-web": "0.17.1",
     "react-redux": "^8.0.1",
     "react-router-native": "^6.3.0",
-    "redux": "^4.2.0"
+    "redux": "^4.2.0",
+    "socket.io-client": "^4.5.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
