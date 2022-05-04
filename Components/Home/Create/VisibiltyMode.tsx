@@ -1,16 +1,18 @@
 import { FC } from "react"
 import { View, Text, TouchableOpacity } from 'react-native'
+import { IconDefinition } from "@fortawesome/fontawesome-svg-core"
 import { dashboardStyle } from './Stylesheet/dashboard.style'
+import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome"
 
 interface GameModeProps {
-  title: "Funny" | "Sussy baka" | "DON'T CHOOSE THAT",
+  title: string
   description: string,
-  emoji: string,
+  icon: IconDefinition,
   chosen?: boolean,
   chooseMode: () => void,
 }
 
-const GameMode: FC<GameModeProps> = ({ title, description, emoji, chosen, chooseMode }) => {
+const VisibiltyMode: FC<GameModeProps> = ({ title, description, icon, chosen, chooseMode }) => {
   return (
     <TouchableOpacity
       onPress={chooseMode}
@@ -21,16 +23,17 @@ const GameMode: FC<GameModeProps> = ({ title, description, emoji, chosen, choose
           borderWidth: chosen ? 2 : 0
         }
       ]}>
-      <Text style={[{
+      <View style={[{
         position: "absolute",
         top: 0,
         left: 0,
-        fontSize: 72
       },
       {
-        transform: [{ translateY: -50 }, { rotate: "-20deg" }, { translateX: -20 }],
+        transform: [{ translateY: -40 }, { translateX: 0 }],
       }
-      ]}>{emoji}</Text>
+      ]}>
+        <FontAwesomeIcon icon={icon} size={80} color="#FFF"/>
+      </View>
       <View style={dashboardStyle.titleHeader}>
         <Text style={{
           color: "#FFF",
@@ -50,4 +53,4 @@ const GameMode: FC<GameModeProps> = ({ title, description, emoji, chosen, choose
   )
 }
 
-export default GameMode
+export default VisibiltyMode

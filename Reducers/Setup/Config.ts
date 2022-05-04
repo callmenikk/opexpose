@@ -3,31 +3,28 @@ export type State = {
   visibility: boolean
 }
 
-export type Action = {
-  type: keyof State,
-  payload: {
-    modeConfig: State["mode"],
-    visibilityConfig: State["visibility"]
-  }
+type Action = {
+  type: "MODE" | "VISIBILITY",
+  payload: State["mode"] | boolean
 }
 
 const defaultState: State = {
   mode: "",
-  visibility: false
+  visibility: true
 }
 
 export const ConfigReducer = (state: State = defaultState, action: Action): State => {
   switch(action.type){
-    case "mode": {
+    case "MODE": {
       return {
         ...state,
-        mode: action.payload.modeConfig
+        mode: action.payload as State["mode"]
       }
     }
-    case "visibility": {
+    case "VISIBILITY": {
       return {
         ...state,
-        visibility: action.payload.visibilityConfig
+        visibility: action.payload as boolean
       }
     }
     default: return state

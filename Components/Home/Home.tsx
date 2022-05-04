@@ -97,7 +97,7 @@ const Home = () => {
             {userData.username}
           </Text>
           <View style={homeStyle.buttons_wrapper}>
-            <TouchableOpacity style={homeStyle.party_buttons}>
+            <TouchableOpacity style={homeStyle.party_buttons} onPress={() => setOpenCreate(true)}>
               <Text
                style={{
                 fontSize: 22,
@@ -113,8 +113,8 @@ const Home = () => {
           </View>
         </View>
         {
-          !openCreate &&
-          <Dashboard />
+          openCreate &&
+          <Dashboard closeCreate={() => setOpenCreate(false)}/>
         }
       </View>
   );
