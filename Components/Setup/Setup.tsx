@@ -3,10 +3,10 @@ import {useNavigate} from "react-router-native"
 import { useState, useEffect } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { setupStyle } from "./Stylesheet/Setup.style";
-import MainBackground from "../asset/MainBackground";
+import MainBackground from "../../utils/asset/MainBackground";
 import Emojis from "./Emojis";
 import CustomizeProfile from "./CustomizeProfile";
-import Warn from "../Alert/Warn";
+import Warn from "../../utils/Alert/Warn";
 
 const Setup = () => {
   const [warn, setWarn] = useState<boolean>(false);

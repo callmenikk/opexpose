@@ -19,9 +19,9 @@ const io = require("socket.io")(http, {
 });
 
 io.on("connection", (socket) => {
-  socket.on("@port_open", (msg) => {
-    socket.broadcast.emit("@response", "STOP!")
-    console.log(msg)
+  socket.on("@port_open", () => {
+    socket.broadcast.emit("@response", true)
+    console.log("client connected")
   })
 })
 
