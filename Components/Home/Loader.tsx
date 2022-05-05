@@ -7,7 +7,7 @@ const loaderStyle = StyleSheet.create({
     position: "absolute",
     top: 0,
     left: 0,
-    zIndex: 15,
+    zIndex: 20,
     display: "flex",
     alignItems: "center",
     justifyContent: "center",

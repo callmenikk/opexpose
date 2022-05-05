@@ -1,4 +1,4 @@
-import { View } from 'react-native'
+import { ScrollView, View } from 'react-native'
 import { State } from '../../../Reducers/Setup/Config'
 import { useDispatch, useSelector } from 'react-redux'
 import VisibiltyMode from './VisibiltyMode'
@@ -8,19 +8,17 @@ import VisibiltyButtons from './VisibiltyButtons'
 import { FC } from 'react'
 
 
-const Visibilty: FC<{goBack: () => void}> = ({goBack}) => {
+const Visibilty: FC<{goBack: () => void, setLoad: (bool: boolean) => void}> = ({goBack, setLoad}) => {
   const dispatch = useDispatch()
   const configs = useSelector((state: { configs: State }) => state.configs);
 
   return (
-    <View style={{
+    <ScrollView contentContainerStyle={{
       display: "flex",
       width: "100%",
-      height: "100%",
-      paddingLeft: 20,
-      paddingRight: 20,
+      paddingHorizontal: 20,
       paddingTop: 30,
-      alignItems: "center"
+      justifyContent: 'center',
     }}>
       <VisibiltyMode
         title={"Visible Voters"}
@@ -36,8 +34,8 @@ const Visibilty: FC<{goBack: () => void}> = ({goBack}) => {
         chooseMode={() => dispatch({ type: "VISIBILITY", payload: false })}
         chosen={!configs.visibility}      
       />
-      <VisibiltyButtons goBack={goBack}/>
-    </View>
+      <VisibiltyButtons goBack={goBack} setLoad={setLoad}/>
+    </ScrollView>
   )
 }
 

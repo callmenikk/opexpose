@@ -8,7 +8,7 @@ import Visibilty from './Visibilty';
 import { useDispatch } from 'react-redux';
 import { FC } from 'react';
 
-const Dashboard: FC<{closeCreate: () => void}> = ({closeCreate}) => {
+const Dashboard: FC<{closeCreate: () => void, setLoad: (bool: boolean) => void}> = ({closeCreate, setLoad}) => {
   const [dashboard, setDashboard] = useState<"CATEGORY" | "VISIBILITY">("CATEGORY")
   const dispatch = useDispatch()
 
@@ -41,7 +41,7 @@ const Dashboard: FC<{closeCreate: () => void}> = ({closeCreate}) => {
         </TouchableOpacity>
       </View>
       { dashboard === "CATEGORY" && <Category closeCreate={closeCreate} changeDashboard={() => setDashboard("VISIBILITY")}/> }
-      { dashboard === "VISIBILITY" && <Visibilty goBack={() => setDashboard("CATEGORY")}/>}
+      { dashboard === "VISIBILITY" && <Visibilty goBack={() => setDashboard("CATEGORY")} setLoad={setLoad}/>}
     </View>
   )
 }

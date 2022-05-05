@@ -2,6 +2,7 @@ import { NativeRouter, Route, Routes } from "react-router-native";
 import Setup from "../Components/Setup/Setup";
 import { Provider } from "react-redux";
 import { createStore } from "redux";
+import Prepare from "../Components/Prepare/Prepare";
 import allReducer from "../Reducers/allReducers";
 import Home from "../Components/Home/Home";
 
@@ -14,6 +15,7 @@ const Router = () => {
         <Routes>
           <Route path="/" element={<Setup />} />
           <Route path="/home" element={<Home />} />
+          <Route path="/prepare" element={<Prepare />} />
         </Routes>
       </NativeRouter>
     </Provider>

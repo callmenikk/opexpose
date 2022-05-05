@@ -114,7 +114,7 @@ const Home = () => {
         </View>
         {
           openCreate &&
-          <Dashboard closeCreate={() => setOpenCreate(false)}/>
+          <Dashboard closeCreate={() => setOpenCreate(false)} setLoad={(bool) => setIsLoading(bool)}/>
         }
       </View>
   );

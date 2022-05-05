@@ -1,8 +1,5 @@
-import { View, Text, TouchableOpacity } from 'react-native'
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import { faXmark } from '@fortawesome/free-solid-svg-icons'
+import { View, Text, TouchableOpacity, ScrollView } from 'react-native'
 import { useSelector, useDispatch } from 'react-redux';
-import { useState } from 'react';
 import GameMode from './GameMode'
 import { FC } from 'react'
 import { State } from '../../../Reducers/Setup/Config';
@@ -18,14 +15,14 @@ const Category: FC<CategoryProps> = ({closeCreate, changeDashboard}) => {
   
   return (
     <>
-      <View style={{
+      <ScrollView contentContainerStyle={{
         display: "flex",
         width: "100%",
-        height: "100%",
-        paddingLeft: 20,
-        paddingRight: 20,
-        paddingTop: 30,
-        alignItems: "center"
+        paddingBottom: 50,
+        paddingTop: 20,
+        paddingHorizontal: 20,
+        alignItems: "center",
+        justifyContent: "center"
       }}>
       
         <GameMode 
@@ -72,7 +69,7 @@ const Category: FC<CategoryProps> = ({closeCreate, changeDashboard}) => {
             fontSize: 28
           }}>Next</Text>
         </TouchableOpacity>
-      </View>
+      </ScrollView >
     </>
   )
 }

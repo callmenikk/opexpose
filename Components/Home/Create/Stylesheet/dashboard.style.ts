@@ -7,7 +7,7 @@ export const dashboardStyle = StyleSheet.create({
     position: "absolute",
     bottom: 0,
     right: 0,
-    height: Dimensions.get("window").height - 120,
+    height: Dimensions.get("window").height - 50,
     zIndex: 15,
     borderTopLeftRadius: 15,
     borderTopRightRadius: 15,
@@ -26,7 +26,7 @@ export const dashboardStyle = StyleSheet.create({
   gamemode: {
     width: "100%",
     backgroundColor: "#2B2B2B",
-    height: 150,
+    height: 130,
     position:"relative",
     borderRadius: 20,
     paddingHorizontal: 10,

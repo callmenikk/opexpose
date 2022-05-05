@@ -25,7 +25,7 @@ const GameMode: FC<GameModeProps> = ({ title, description, emoji, chosen, choose
         position: "absolute",
         top: 0,
         left: 0,
-        fontSize: 72
+        fontSize: 72,
       },
       {
         transform: [{ translateY: -50 }, { rotate: "-20deg" }, { translateX: -20 }],
