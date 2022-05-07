@@ -4,6 +4,7 @@ const app = express()
 const http = require("http").createServer(app);
 const createRoom = require("./Router/createRoom");
 const roomUsage = require("./Usage/roomUsage")
+const {rooms} = require("./rooms")
 
 const port = process.env.PORT || 3000
 
@@ -24,6 +25,17 @@ io.on("connection", (socket) => {
   socket.on("@port_open", () => {
     socket.broadcast.emit("@response", true)
     console.log("client connected")
+  })
+
+  socket.on("@delete_room", (room_id, client_id) => {
+    const delRoom = rooms.filter((room) => room.room_id !== room_id)
+    const findRoom = rooms.find((room) => room.room_id !== room_id)
+
+    if(findRoom.owner_id !== client_id){
+      socket.broadcast.emit("action denied, due permission not granted")
+    }else{
+      rooms = delRoom
+    }
   })
 })
 
