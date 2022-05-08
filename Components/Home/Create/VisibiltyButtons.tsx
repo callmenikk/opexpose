@@ -53,7 +53,6 @@ const VisibiltyButtons: FC<{ goBack: () => void, setLoad: (bool: boolean) => voi
   const createRoom = () => {
     let mounted = false
     setLoad(true)
-    
 
     axios.post(host.host + "/api/v1/createRoom", {
       userToken: userData.client_id,
@@ -64,18 +63,9 @@ const VisibiltyButtons: FC<{ goBack: () => void, setLoad: (bool: boolean) => voi
     })
       .then(resp => {
         if(!mounted){
-          dispatch({
-            type: "LOAD_ROOM", payload: {
-              room_id: resp.data.room_id,
-              mode: resp.data.mode,
-              visibility: resp.data.visibility,
-              owner_id: resp.data.owner_id,
-              profile_src: resp.data.online_users[0].profile_src,
-              userToken: resp.data.online_users[0].userToken,
-              username: resp.data.online_users[0].username
-            }
-          })
-          navigate("/prepare")
+          if(resp.data.success){
+            navigate(`/prepare/${resp.data.room_id.toString()}`)
+          }
         }
       })
       .catch(err => {

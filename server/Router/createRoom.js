@@ -22,11 +22,8 @@ router.post("/createRoom", (req, res) => {
   })
 
   res.send({
-    room_id,
-    mode,
-    visibility,
-    owner_id: userToken,
-    online_users: [{ userToken, profile_src, username }],
+    success: true,
+    room_id
   })
 })
 

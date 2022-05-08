@@ -1,12 +1,18 @@
 import React from 'react'
-import { TouchableOpacity, View, Text } from 'react-native'
+import { View, Text } from 'react-native'
 import { prepStyle } from './StyleSheet/prep.style'
 import { useSelector } from 'react-redux'
 import { State } from '../../Reducers/Playground/RoomPrepare'
 import UsersList from './UsersList'
+import { State as UserState} from '../../Reducers/Setup/userData'
+import StartButton from './StartButton'
+
 
 const UsersContainer = () => {
   const configs = useSelector((state: { RoomPrepare: State }) => state.RoomPrepare);
+  const userData = useSelector( 
+    (state: { userData: UserState }) => state.userData
+  ); 
 
   return (
     <View style={prepStyle.UsersList}>
@@ -33,19 +39,7 @@ const UsersContainer = () => {
             }
           </Text>
         </View>
-        <TouchableOpacity 
-        disabled={configs.online_users.length >= 3 || true}
-        style={[
-          prepStyle.StartBtn,
-          {
-            backgroundColor: configs.online_users.length >= 3 ? "#3FFF3F" : "#737373"
-          }
-        ]}>
-          <Text style={{
-            fontSize: 28,
-            fontWeight: "bold"
-          }}>Start</Text>
-        </TouchableOpacity>
+        { configs.owner_id === userData.client_id && <StartButton /> }
       </View>
     </View>
   )

@@ -104,11 +104,12 @@ const Home = () => {
                 fontWeight: "900"
               }}>Create Party</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={homeStyle.party_buttons}>
+            <TouchableOpacity style={homeStyle.party_buttons} onPress={() => navigate("/joincode")}>
               <Text style={{
                 fontSize: 22,
                 fontWeight: "900"
-              }}>Join Game</Text>
+              }}
+              >Join Game</Text>
             </TouchableOpacity>
           </View>
         </View>

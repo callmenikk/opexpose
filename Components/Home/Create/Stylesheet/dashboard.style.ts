@@ -4,10 +4,10 @@ import { StyleSheet, Dimensions, Platform } from "react-native";
 export const dashboardStyle = StyleSheet.create({
   dashboard: {
     width: Dimensions.get("window").width,
+    height: Dimensions.get("window").height - 50,
     position: "absolute",
     bottom: 0,
     right: 0,
-    height: Dimensions.get("window").height - 50,
     zIndex: 15,
     borderTopLeftRadius: 15,
     borderTopRightRadius: 15,
