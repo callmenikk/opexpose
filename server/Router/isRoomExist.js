@@ -1,5 +1,6 @@
 const router = require("express").Router()
 const { rooms } = require("../rooms")
+const { max_users } = require("../configs/gameConfigs")
 
 router.get("/room_id/:id", (req, res) => {
   const { id } = req.params
@@ -20,6 +21,12 @@ router.get("/room_id/:id", (req, res) => {
   }
 
   const foundRoom = rooms.find(room => room.room_id === roomId)
+
+  if (foundRoom.online_users.length === max_users) {
+    return res.status(403).send({
+      err: "room is full"
+    })
+  }
 
   return res.send({
     success: true,

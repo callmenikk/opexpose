@@ -8,7 +8,7 @@ const StartButton = () => {
 
   return (
     <TouchableOpacity 
-        disabled={configs.online_users.length >= 3 || true}
+        disabled={configs.online_users.length >= 3 ? false : true}
         style={[
           prepStyle.StartBtn,
           {

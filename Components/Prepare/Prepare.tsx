@@ -12,6 +12,7 @@ import MainBackground from '../../utils/asset/MainBackground'
 import UsersContainer from './UsersContainer'
 import axios from 'axios'
 import Loader from '../Home/Loader'
+import OwnerWarn from './OwnerWarn'
 
 const Prepare = () => {
   const configs = useSelector((state: { RoomPrepare: State }) => state.RoomPrepare);
@@ -20,7 +21,9 @@ const Prepare = () => {
   );
   const [isLoading, setIsLoading] = useState<boolean>(true)
   const dispatch = useDispatch()
+  const [warn, setWarn] = useState(false)
   const { id } = useParams()
+  
 
   useEffect(() => {
     let monted = true
@@ -41,7 +44,7 @@ const Prepare = () => {
             dispatch({ type: "ADD_PLAYER", payload: { userToken: userData.client_id, profile_src: userData.avatar, username: userData.username } })
           }
           setIsLoading(false)
-        }
+        }  
       })
       .catch(error => {
         if (error.response.data.err === "Room Not Found ") {
@@ -60,10 +63,13 @@ const Prepare = () => {
       {
         isLoading && <Loader />
       }
+      {
+        warn && <OwnerWarn closeWarn={() => setWarn(false)}/>
+      }
       <View style={setupStyle.mainBg}>
         <MainBackground />
       </View>
-      <Code code={configs.room_id} />
+      <Code code={configs.room_id} openWarn={() => setWarn(true)}/>
       <UsersContainer />
     </View>
   )

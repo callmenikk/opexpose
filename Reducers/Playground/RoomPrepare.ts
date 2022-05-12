@@ -66,6 +66,15 @@ export const RoomPrepare = (state: State = defaultState, action: Action): State 
         ]
       }
     }
+    case "REMOVE_PLAYER": {
+      const {userToken} = action.payload 
+      
+
+      return {
+        ...state,
+        online_users: state.online_users.filter(e => e.userToken !== userToken?.toString())
+      }
+    }
     default: return state
   }
 }

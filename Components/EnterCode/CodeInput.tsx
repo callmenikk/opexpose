@@ -30,8 +30,14 @@ const CodeInput: FC<CodeInputProps> = ({setLoad, setError}) => {
       })
       .catch(error => {
         setLoad(false)
+
+        console.log(error.response.data.err)
+
         if(error.response.data.err === 'Room Not Found'){
           setError(true, "Make sure inputed room code is correct")
+        }
+        if(error.response.data.err === 'room is full'){
+          setError(true, "sadly party room is already full")
         }
       })
     }else{

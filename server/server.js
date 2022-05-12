@@ -44,7 +44,7 @@ io.on("connection", (socket) => {
         userToken: user_info.userToken,
         profile_src: user_info.profile_src,
         username: user_info.username
-      }
+      }  
 
 
       rooms[findRoomIndex].online_users.push(addUser)
@@ -52,8 +52,7 @@ io.on("connection", (socket) => {
   })
 
   socket.on("@leave_room", (room_id, client_id) => {
-    const delRoom = rooms.filter((room) => room.room_id !== room_id)
-    const findRoom = rooms.find((room) => room.room_id === room_id)
+    const findRoom = rooms.find(async (room) =>await room.room_id === room_id)
 
     console.log(rooms)
     console.log({ room_id, client_id })
@@ -65,16 +64,17 @@ io.on("connection", (socket) => {
 
     if (findRoom.owner_id !== client_id) {
       const delUserFromRoom = findRoom.online_users.filter(user => user.userToken !== client_id)
-      const findRoomIndex = rooms.findIndex(room => room.room_id === room_id)
+      const findRoomIndex = rooms.findIndex(async room => await room.room_id === room_id)
 
-      console.log("Room Id is: ", findRoomIndex)
-      socket.broadcast.emit("@test", findRoomIndex)
+      rooms[findRoomIndex].online_users = delUserFromRoom
+      socket.broadcast.emit("@leftUser", client_id)
+    }  
+    else {
+      const findRoomIndex = rooms.findIndex(async room => await room.room_id === room_id)
+      rooms.splice(findRoomIndex, 1)
     }
-    // else {
-    //   rooms = delRoom
-    // }
   })
-})
+}) 
 
 
 app.get("/", (req, res) => {

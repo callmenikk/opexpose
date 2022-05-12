@@ -9,7 +9,7 @@ import { State as RoomState } from '../../Reducers/Playground/RoomPrepare'
 import {io} from 'socket.io-client'
 import host from "../../host.json"
 
-const Code: FC<{code: string}> = ({code}) => {
+const Code: FC<{code: string, openWarn: () => void}> = ({code, openWarn}) => {
   const socket = io(host.host)
   const [socketConnected, setSocketConnected] = useState<boolean>(false)
   const configs = useSelector((state: { RoomPrepare: RoomState }) => state.RoomPrepare);
@@ -32,7 +32,13 @@ const Code: FC<{code: string}> = ({code}) => {
     socket.on("new_user", (user) => {
       dispatch({ type: "ADD_PLAYER", payload: { userToken: user.userToken, profile_src: user.profile_src, username: user.username } })
     })
+
+    socket.on("@leftUser", (id) => {
+      dispatch({ type: "REMOVE_PLAYER", payload: { userToken: id.toString() } })
+    })
+
   }, [])
+
 
   useEffect(() => {
     if(socketConnected){
@@ -45,8 +51,12 @@ const Code: FC<{code: string}> = ({code}) => {
   }, [socketConnected])
 
   const leaveRoom = () => { 
-    // socket.emit("@leave_room",configs.room_id, userData.client_id)
-    navigate('/home')
+    if(configs.owner_id !== userData.client_id){
+      socket.emit("@leave_room",configs.room_id, userData.client_id)
+      return navigate('/home')
+    }
+
+    openWarn()
   }
 
   return (
