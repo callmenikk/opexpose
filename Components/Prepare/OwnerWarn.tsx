@@ -6,9 +6,9 @@ import { State as UserState } from '../../Reducers/Setup/userData'
 import { io } from 'socket.io-client'
 import host from "../../host.json"
 import { useNavigate } from 'react-router-native'
-import {FC} from "react"
+import { FC } from "react"
 
-const OwnerWarn: FC<{closeWarn: () => void}> = ({closeWarn}) => {
+const OwnerWarn: FC<{ closeWarn: () => void, text: string }> = ({ closeWarn, text }) => {
   const configs = useSelector((state: { RoomPrepare: State }) => state.RoomPrepare);
   const socket = io(host.host)
   const userData = useSelector(
@@ -29,23 +29,35 @@ const OwnerWarn: FC<{closeWarn: () => void}> = ({closeWarn}) => {
           <Text style={{
             color: "#FFF",
             textAlign: "center"
-          }}>You are owner of room, if you will leave, room will be deleted</Text>
+          }}>{text}</Text>
         </View>
-        <View style={style.buttons}>
-          <TouchableOpacity style={[style.button, {backgroundColor: "#000"}]} onPress={closeWarn}>
-            <Text style={{
-              color: "#FFF",  
-            }}>Cancel</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={[style.button, {backgroundColor: "#ff3d3d"}]} onPress={() => {
-            socket.emit("@leave_room", configs.room_id, userData.client_id)
-            return navigate('/home')
-          }}>
-            <Text style={{
-              color: "#FFF",
-            }}>Leave</Text>
-          </TouchableOpacity>
-        </View>
+        {
+          text !== "Owner left room, and room deleted immediately" ?
+            <View style={[style.buttons, {
+              flexDirection: text !== "Owner left room, and room deleted immediately" ? "row" : "column"
+            }]}>
+              <TouchableOpacity style={[style.button, { backgroundColor: "#000" }]} onPress={closeWarn}>
+                <Text style={{
+                  color: "#FFF",
+                }}>Cancel</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={[style.button, { backgroundColor: "#ff3d3d" }]} onPress={() => {
+                socket.emit("@leave_room", configs.room_id, userData.client_id)
+                return navigate('/home')
+              }}>
+                <Text style={{
+                  color: "#FFF",
+                }}>Leave</Text>
+              </TouchableOpacity>
+            </View> :
+            <View style={style.buttons}>
+              <TouchableOpacity style={[style.button, {backgroundColor: "#5dff3d"}]} onPress={() => navigate('/home')}>
+                <Text style={{
+                  color: "#FFF",
+                }}>Okay</Text>
+              </TouchableOpacity>
+            </View>
+        }
       </View>
     </View>
   )

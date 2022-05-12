@@ -9,7 +9,7 @@ import { State as RoomState } from '../../Reducers/Playground/RoomPrepare'
 import {io} from 'socket.io-client'
 import host from "../../host.json"
 
-const Code: FC<{code: string, openWarn: () => void}> = ({code, openWarn}) => {
+const Code: FC<{code: string, openWarn: (text: string) => void}> = ({code, openWarn}) => {
   const socket = io(host.host)
   const [socketConnected, setSocketConnected] = useState<boolean>(false)
   const configs = useSelector((state: { RoomPrepare: RoomState }) => state.RoomPrepare);
@@ -31,6 +31,10 @@ const Code: FC<{code: string, openWarn: () => void}> = ({code, openWarn}) => {
 
     socket.on("new_user", (user) => {
       dispatch({ type: "ADD_PLAYER", payload: { userToken: user.userToken, profile_src: user.profile_src, username: user.username } })
+    })
+
+    socket.on("@room_deleted", (text) => {
+      openWarn("Owner left room, and room deleted immediately")
     })
 
     socket.on("@leftUser", (id) => {
@@ -56,7 +60,7 @@ const Code: FC<{code: string, openWarn: () => void}> = ({code, openWarn}) => {
       return navigate('/home')
     }
 
-    openWarn()
+    openWarn("You are the owner of room, if you leave, room deletes, are you sure you want to make that?")
   }
 
   return (

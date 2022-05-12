@@ -13,16 +13,28 @@ import UsersContainer from './UsersContainer'
 import axios from 'axios'
 import Loader from '../Home/Loader'
 import OwnerWarn from './OwnerWarn'
+import { io } from 'socket.io-client'
 
 const Prepare = () => {
   const configs = useSelector((state: { RoomPrepare: State }) => state.RoomPrepare);
   const userData = useSelector(
     (state: { userData: UserState }) => state.userData
   );
+  const socket = io(host.host)
   const [isLoading, setIsLoading] = useState<boolean>(true)
   const dispatch = useDispatch()
-  const [warn, setWarn] = useState(false)
+  const [warn, setWarn] = useState({
+    show: false,
+    text: ""
+  })
   const { id } = useParams()
+
+  useEffect(() => {
+    socket.on("@room_deleted", (text) => {
+      setWarn({show: true, text: "Owner left room, and room deleted immediately"})
+      console.log("text");
+    })
+  }, [])
   
 
   useEffect(() => {
@@ -64,12 +76,12 @@ const Prepare = () => {
         isLoading && <Loader />
       }
       {
-        warn && <OwnerWarn closeWarn={() => setWarn(false)}/>
+        warn.show && <OwnerWarn closeWarn={() => setWarn({...warn, show: false})} text={warn.text}/>
       }
       <View style={setupStyle.mainBg}>
         <MainBackground />
       </View>
-      <Code code={configs.room_id} openWarn={() => setWarn(true)}/>
+      <Code code={configs.room_id} openWarn={(text) => setWarn({text: text, show: true})}/>
       <UsersContainer />
     </View>
   )

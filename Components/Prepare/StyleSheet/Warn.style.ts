@@ -33,14 +33,15 @@ export const style = StyleSheet.create({
     display: "flex",
     alignItems: "center",
     marginTop: 15,
+    paddingHorizontal: 50,
+
   },
   buttons: {
     width: "100%",
     display: "flex",
-    paddingHorizontal: 50,
+    paddingHorizontal: 10,
     alignItems: "center",
     justifyContent: "space-between",
-    flexDirection: "row",
     height: 50
   },
   button: {

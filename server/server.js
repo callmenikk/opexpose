@@ -15,7 +15,7 @@ app.use(express.urlencoded({
   extended: true
 }));
 
-const io = require("socket.io")(http, {
+const io = require("socket.io")(http, { 
   cors: {
     origin: "http://localhost:3000",
     methods: ["GET", "POST"]
@@ -36,10 +36,10 @@ io.on("connection", (socket) => {
     const findRoom = rooms.find(async (room) => await room["room_id"] == room)
 
     const findRoomIndex = rooms.findIndex(async room => await room.room_id === room)
-    const isUserExist = findRoom.online_users.some(user => user.userToken === user_info.userToken)
+    const isUserExist = findRoom ? findRoom.online_users.some(user => user.userToken === user_info.userToken) : false
 
     if (!isUserExist) {
-      const addUser =
+      const addUser = 
       {
         userToken: user_info.userToken,
         profile_src: user_info.profile_src,
@@ -48,14 +48,11 @@ io.on("connection", (socket) => {
 
 
       rooms[findRoomIndex].online_users.push(addUser)
-    }
+    }    
   })
 
   socket.on("@leave_room", (room_id, client_id) => {
     const findRoom = rooms.find(async (room) =>await room.room_id === room_id)
-
-    console.log(rooms)
-    console.log({ room_id, client_id })
 
     if (findRoom == undefined) {
       console.log("Room not found")
@@ -72,6 +69,7 @@ io.on("connection", (socket) => {
     else {
       const findRoomIndex = rooms.findIndex(async room => await room.room_id === room_id)
       rooms.splice(findRoomIndex, 1)
+      socket.to(room_id).emit("@room_deleted", "room deleted")
     }
   })
 }) 
