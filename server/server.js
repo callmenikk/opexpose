@@ -31,6 +31,10 @@ io.on("connection", (socket) => {
     socket.join(room)
   })
 
+  socket.on("start-game", () => {
+    
+  })
+
   socket.on("join-room", (room, user_info) => {
     socket.to(room).emit("new_user", user_info)
     const findRoom = rooms.find(async (room) => await room["room_id"] == room)
