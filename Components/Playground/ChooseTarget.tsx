@@ -1,12 +1,23 @@
-import React from 'react'
+import { FC } from 'react'
 import { TouchableOpacity, View, Image, Text, Dimensions } from 'react-native'
 import { style } from './StyleSheet/pg.style'
 
 const { width } = Dimensions.get("window")
 
-const ChooseTarget = () => {
+interface TargetProps {
+  client_id: string,
+  username: string,
+  profile_src: string,
+}
+
+export interface ChooseTargetProps extends TargetProps {
+  chooseTarget: (obj: TargetProps) => void
+}
+
+const ChooseTarget: FC<ChooseTargetProps> = ({client_id, username, profile_src, chooseTarget}) => {
+
   return (
-    <TouchableOpacity style={style.choose_player}>
+    <TouchableOpacity style={style.choose_player} onPress={() => chooseTarget({client_id, username, profile_src})}>
       <View style={{
         width: width / 3.5,
         height: width / 3.5,
@@ -19,7 +30,7 @@ const ChooseTarget = () => {
             height: "100%"
           }}
           source={{
-            uri: 'https://cdn.discordapp.com/attachments/916412212594225242/973716922514427985/unknown.png'
+            uri: `data:image/jpeg;base64,${profile_src}`
           }} />
       </View>
       <Text style={{
@@ -27,7 +38,7 @@ const ChooseTarget = () => {
         fontWeight: "bold",
         fontSize: 22,
         marginTop: 20
-      }}>callmenikk</Text>
+      }}>{username}</Text>
     </TouchableOpacity>
   )
 }

@@ -17,8 +17,7 @@ router.post("/createRoom", (req, res) => {
     visibility,
     owner_id: userToken,
     online_users: [{ userToken, profile_src, username }],
-    question: 1,
-    started: false
+    question: 1
   })
 
   res.send({

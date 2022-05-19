@@ -5,7 +5,8 @@ import { prepStyle } from './StyleSheet/prep.style'
 import { useNavigate, useParams } from 'react-router-native'
 import { State } from '../../Reducers/Setup/userData'
 import { useSelector, useDispatch } from 'react-redux'
-import { State as RoomState } from '../../Reducers/Playground/RoomPrepare'
+import { State as RoomState } from '../../Reducers/Prepare/RoomPrepare'
+import { State as Playground} from '../../Reducers/Playground/playground'
 import {io} from 'socket.io-client'
 import host from "../../host.json"
 
@@ -16,6 +17,7 @@ const Code: FC<{code: string, openWarn: (text: string) => void}> = ({code, openW
   const navigate = useNavigate()
   const {id} = useParams()
   const dispatch = useDispatch()
+  const playrgound = useSelector((state: { RoomPrepare: Playground }) => state.RoomPrepare);
   const userData = useSelector( 
     (state: { userData: State }) => state.userData
   ); 
@@ -39,6 +41,18 @@ const Code: FC<{code: string, openWarn: (text: string) => void}> = ({code, openW
 
     socket.on("@leftUser", (id) => {
       dispatch({ type: "REMOVE_PLAYER", payload: { userToken: id.toString() } })
+    })
+
+    socket.on("@started", async (prepared) => {
+      console.log(prepared.questionText)
+      console.log(prepared.targets)
+      dispatch({type: "SET_QUESTION", payload: {
+        questions: await prepared.questionText,
+        targets: await prepared.targets,
+        questionNumber: await prepared.question,
+        owner_id:await prepared.owner_id
+      }})
+      navigate("/playground/"+id?.toString())
     })
 
   }, [])

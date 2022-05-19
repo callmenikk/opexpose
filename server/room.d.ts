@@ -12,5 +12,4 @@ export type RoomType = {
   owner_id: string,
   online_users: OnlineUsersType[],
   question: number,
-  started: false
 } 

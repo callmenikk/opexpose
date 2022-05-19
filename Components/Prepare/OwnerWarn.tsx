@@ -1,5 +1,5 @@
 import { View, Text, TouchableOpacity } from 'react-native'
-import { State } from '../../Reducers/Playground/RoomPrepare'
+import { State } from '../../Reducers/Prepare/RoomPrepare'
 import { useSelector } from 'react-redux'
 import { style } from './StyleSheet/Warn.style'
 import { State as UserState } from '../../Reducers/Setup/userData'

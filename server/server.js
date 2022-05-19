@@ -4,8 +4,13 @@ const app = express()
 const http = require("http").createServer(app);
 const createRoom = require("./Router/createRoom");
 const roomUsage = require("./Usage/roomUsage")
+const connectSocket = require("./sockets/connectSocket")
 const isRoomExist = require("./Router/isRoomExist")
-const { rooms } = require("./rooms")
+const joinMember = require("./sockets/join_room")
+const listen = require("./sockets/listen")
+const leaveRoom = require("./sockets/leave_member")
+const startParty = require("./sockets/start_party")
+const vote_target = require("./sockets/vote_target")
 
 const port = process.env.PORT || 3000
 
@@ -23,63 +28,16 @@ const io = require("socket.io")(http, {
 });
 
 io.on("connection", (socket) => {
-  socket.on("@port_open", () => {
-    socket.broadcast.emit("@response", true)
-  })
-
-  socket.on("listen-room", (room) => {
-    socket.join(room)
-  })
-
-  socket.on("start-game", () => {
-    
-  })
-
-  socket.on("join-room", (room, user_info) => {
-    socket.to(room).emit("new_user", user_info)
-    const findRoom = rooms.find(async (room) => await room["room_id"] == room)
-
-    const findRoomIndex = rooms.findIndex(async room => await room.room_id === room)
-    const isUserExist = findRoom ? findRoom.online_users.some(user => user.userToken === user_info.userToken) : false
-
-    if (!isUserExist) {
-      const addUser = 
-      {
-        userToken: user_info.userToken,
-        profile_src: user_info.profile_src,
-        username: user_info.username
-      }  
-
-
-      rooms[findRoomIndex].online_users.push(addUser)
-    }    
-  })
-
-  socket.on("@leave_room", (room_id, client_id) => {
-    const findRoom = rooms.find(async (room) =>await room.room_id === room_id)
-
-    if (findRoom == undefined) {
-      console.log("Room not found")
-      return
-    }
-
-    if (findRoom.owner_id !== client_id) {
-      const delUserFromRoom = findRoom.online_users.filter(user => user.userToken !== client_id)
-      const findRoomIndex = rooms.findIndex(async room => await room.room_id === room_id)
-
-      rooms[findRoomIndex].online_users = delUserFromRoom
-      socket.broadcast.emit("@leftUser", client_id)
-    }  
-    else {
-      const findRoomIndex = rooms.findIndex(async room => await room.room_id === room_id)
-      rooms.splice(findRoomIndex, 1)
-      socket.to(room_id).emit("@room_deleted", "room deleted")
-    }
-  })
+  connectSocket(socket)
+  listen(socket)
+  joinMember(socket)
+  leaveRoom(socket)
+  startParty(socket)
+  vote_target(socket)
 }) 
 
 
-app.get("/", (req, res) => {
+app.get("/", (_, res) => {
   res.send({
     msg: "succuess"
   })

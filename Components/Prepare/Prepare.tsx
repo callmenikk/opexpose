@@ -2,7 +2,7 @@ import { View } from 'react-native'
 import { setupStyle } from '../Setup/Stylesheet/Setup.style'
 import { prepStyle } from './StyleSheet/prep.style'
 import { useEffect, useState } from 'react'
-import { State } from '../../Reducers/Playground/RoomPrepare'
+import { State } from '../../Reducers/Prepare/RoomPrepare'
 import { useSelector, useDispatch } from 'react-redux'
 import { useParams } from 'react-router-native'
 import host from "../../host.json"
@@ -32,7 +32,6 @@ const Prepare = () => {
   useEffect(() => {
     socket.on("@room_deleted", (text) => {
       setWarn({show: true, text: "Owner left room, and room deleted immediately"})
-      console.log("text");
     })
   }, [])
   

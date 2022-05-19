@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-native'
 import { State } from '../../../Reducers/Setup/Config'
 import { State as UserState } from '../../../Reducers/Setup/userData'
 import { useDispatch, useSelector } from 'react-redux'
-import { State as RoomState } from '../../../Reducers/Playground/RoomPrepare'
+import { State as RoomState } from '../../../Reducers/Prepare/RoomPrepare'
 import host from "../../../host.json"
 
 const ButtonsStyle = StyleSheet.create({

@@ -2,7 +2,7 @@ import {Text, View} from 'react-native'
 import { prepStyle } from './StyleSheet/prep.style'
 import { FlatGrid } from 'react-native-super-grid'
 import { useSelector } from 'react-redux'
-import { State } from '../../Reducers/Playground/RoomPrepare'
+import { State } from '../../Reducers/Prepare/RoomPrepare'
 import User from './User'
 
 const UsersList = () => {
