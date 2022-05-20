@@ -54,11 +54,6 @@ const Playground = () => {
           username: obj.username,
           voter: userData.client_id
         }, id)
-        console.log({
-          A: obj.client_id,
-          B: obj.username,
-          votedBy: userData.client_id
-        })
         // setIsWaiting(true)
       }}/>
       <Timer />

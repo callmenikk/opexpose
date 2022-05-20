@@ -11,10 +11,6 @@ const QuestionTargets: FC<{chooseTarget: ChooseTargetProps["chooseTarget"]}> = (
   const playground = useSelector(
     (state: { playground: State }) => state.playground
   );
-
-  console.log(playground);
-  console.log(playground.targets[1].username);
-  //asdasd
   
 
   return (

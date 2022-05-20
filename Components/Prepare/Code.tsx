@@ -44,8 +44,6 @@ const Code: FC<{code: string, openWarn: (text: string) => void}> = ({code, openW
     })
 
     socket.on("@started", async (prepared) => {
-      console.log(prepared.questionText)
-      console.log(prepared.targets)
       dispatch({type: "SET_QUESTION", payload: {
         questions: await prepared.questionText,
         targets: await prepared.targets,

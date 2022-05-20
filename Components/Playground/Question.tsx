@@ -1,5 +1,6 @@
 import { FC } from 'react'
 import { View, Text } from 'react-native'
+import { useNavigate } from 'react-router-native'
 import { style } from './StyleSheet/pg.style'
 
 interface QuestionProps {
@@ -8,6 +9,7 @@ interface QuestionProps {
 }
 
 const Question:FC<QuestionProps> = ({question, questionNumber}) => {
+  const navigate = useNavigate()
   return (
     <View style={style.question_container}>
       <View style={style.question}>
@@ -17,13 +19,17 @@ const Question:FC<QuestionProps> = ({question, questionNumber}) => {
             fontSize: 20,
             fontWeight: "bold",
             textAlign: "center"
-          }}>Question {questionNumber}/20</Text>
+          }}
+          onPress={() => {
+            navigate('/home')
+          }}
+          >Question {questionNumber}/20</Text>
         </View>
         <View style={style.question_section}>
           <Text style={{
             color: "#FFF",
             fontWeight: "bold",
-            textAlign: "center",
+            textAlign: "center",     
             fontSize: 29
           }}>{question}</Text>
         </View>
