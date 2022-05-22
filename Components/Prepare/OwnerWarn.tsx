@@ -10,7 +10,7 @@ import { FC } from "react"
 
 const OwnerWarn: FC<{ closeWarn: () => void, text: string }> = ({ closeWarn, text }) => {
   const configs = useSelector((state: { RoomPrepare: State }) => state.RoomPrepare);
-  const socket = io(host.host)
+  const socket = io(host.host, { transports: ['websocket'] })
   const userData = useSelector(
     (state: { userData: UserState }) => state.userData
   );

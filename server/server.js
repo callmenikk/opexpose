@@ -6,6 +6,7 @@ const createRoom = require("./Router/createRoom");
 const roomUsage = require("./Usage/roomUsage")
 const connectSocket = require("./sockets/connectSocket")
 const isRoomExist = require("./Router/isRoomExist")
+const results = require("./sockets/results")
 const joinMember = require("./sockets/join_room")
 const listen = require("./sockets/listen")
 const leaveRoom = require("./sockets/leave_member")
@@ -20,11 +21,14 @@ app.use(express.urlencoded({
   extended: true
 }));
 
-const io = require("socket.io")(http, { 
+const io = require("socket.io")(http, {
   cors: {
     origin: "http://localhost:3000",
     methods: ["GET", "POST"]
-  }
+  },
+  maxHttpBufferSize: 1e8,
+  transports: ['websocket'],
+  pingTimeout: 30000
 });
 
 io.on("connection", (socket) => {
@@ -34,7 +38,8 @@ io.on("connection", (socket) => {
   leaveRoom(socket)
   startParty(socket)
   vote_target(socket)
-}) 
+  results(socket)
+})
 
 
 app.get("/", (_, res) => {

@@ -17,7 +17,9 @@ import Loader from '../Home/Loader'
 import Waiter from './Waiter'
 
 const Playground = () => {
-  const socket = io(host.host)
+  const socket = io(host.host, {
+    transports: ['websocket']
+ })
   const {id} = useParams()
   const [isLoading, setIsLoading] = useState<boolean>(true)
   const userData = useSelector( 
@@ -33,6 +35,15 @@ const Playground = () => {
     socket.emit("@port_open")
     socket.emit('@listen', id)
     setIsLoading(false)
+
+
+    socket.on("@result_done", (results) => {
+      console.log("1", results.first_participant.percentage+"%")
+      console.log("2", results.second_participant.percentage+"%")
+
+      console.log("[1]total", results.first_participant.total_vote)
+      console.log("[2]total", results.second_participant.total_vote)
+    })
   }, [socket])
 
   return ( 
@@ -54,7 +65,7 @@ const Playground = () => {
           username: obj.username,
           voter: userData.client_id
         }, id)
-        // setIsWaiting(true)
+        setIsWaiting(true)
       }}/>
       <Timer />
     </View>

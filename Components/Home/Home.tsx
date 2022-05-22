@@ -21,7 +21,7 @@ const Home = () => {
     (state: { userData: State }) => state.userData
   ); 
   
-  const socket = io(host.host)
+  const socket = io(host.host, { transports: ['websocket'] })
   
   //connects socket 
   useEffect(() => {

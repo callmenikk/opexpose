@@ -16,13 +16,12 @@ const StartButton = () => {
   );
   const navigate = useNavigate()
   const {id} = useParams()
-  const socket = io(host.host)
+  const socket = io(host.host, { transports: ['websocket'] })
 
   const startRoom = () => {
     if(configs.online_users.length < 3) return
     socket.emit("@start_party", id, userData.client_id)
     navigate("/playground/"+id)
-
   }
 
   return (

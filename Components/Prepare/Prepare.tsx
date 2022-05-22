@@ -20,7 +20,7 @@ const Prepare = () => {
   const userData = useSelector(
     (state: { userData: UserState }) => state.userData
   );
-  const socket = io(host.host)
+  const socket = io(host.host, { transports: ['websocket'] })
   const [isLoading, setIsLoading] = useState<boolean>(true)
   const dispatch = useDispatch()
   const [warn, setWarn] = useState({

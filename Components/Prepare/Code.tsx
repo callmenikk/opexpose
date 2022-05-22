@@ -11,13 +11,13 @@ import {io} from 'socket.io-client'
 import host from "../../host.json"
 
 const Code: FC<{code: string, openWarn: (text: string) => void}> = ({code, openWarn}) => {
-  const socket = io(host.host)
+  const socket = io(host.host, { transports: ['websocket'] })
   const [socketConnected, setSocketConnected] = useState<boolean>(false)
   const configs = useSelector((state: { RoomPrepare: RoomState }) => state.RoomPrepare);
   const navigate = useNavigate()
   const {id} = useParams()
   const dispatch = useDispatch()
-  const playrgound = useSelector((state: { RoomPrepare: Playground }) => state.RoomPrepare);
+  // const playrgound = useSelector((state: { RoomPrepare: Playground }) => state.RoomPrepare);
   const userData = useSelector( 
     (state: { userData: State }) => state.userData
   ); 

@@ -19,7 +19,6 @@ module.exports = (socket) => {
       ...findRoom,
       questionText: questions[findRoom.mode].question[randomQuestion],
       targets: randomUsers(findRoom.online_users),
-      participants: findRoom.online_users,
       voters: []
     }   
 
