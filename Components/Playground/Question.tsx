@@ -1,5 +1,5 @@
 import { FC, useEffect, useState } from 'react'
-import { View, Text } from 'react-native'
+import { View, Text, StyleProp, ViewStyle } from 'react-native'
 import { State as UserState} from '../../Reducers/Setup/userData'
 import { io } from 'socket.io-client'
 import { useSelector } from 'react-redux'
@@ -8,12 +8,15 @@ import { style } from './StyleSheet/pg.style'
 import { useParams } from 'react-router-native'
 import host from "../../host.json"
 
+// paddingTop: 60
+
 interface QuestionProps {
   question: string,
-  questionNumber: number
+  questionNumber: number,
+  optionalStyle?: StyleProp<ViewStyle>
 }
 
-const Question:FC<QuestionProps> = ({question, questionNumber}) => {
+const Question:FC<QuestionProps> = ({question, questionNumber, optionalStyle}) => {
   const socket = io(host.host, {
     transports: ['websocket']
  })
@@ -41,7 +44,7 @@ const Question:FC<QuestionProps> = ({question, questionNumber}) => {
   }, [])
 
   return (
-    <View style={style.question_container}>
+    <View style={[style.question_container, optionalStyle]}>
       <View style={style.question}>
         <View style={style.questionHeader}>
           <Text style={{

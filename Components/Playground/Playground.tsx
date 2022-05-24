@@ -15,6 +15,7 @@ import host from "../../host.json"
 import { State as UserState} from '../../Reducers/Setup/userData'
 import Loader from '../Home/Loader'
 import Waiter from './Waiter'
+import Unvisible from './Results/Unvisible/Unvisible'
 
 const Playground = () => {
   const socket = io(host.host, {
@@ -48,6 +49,7 @@ const Playground = () => {
 
   return ( 
     <View style={style.container}>
+      <Unvisible />
       {
         isLoading && <Loader />
       }
@@ -57,7 +59,7 @@ const Playground = () => {
       <View style={setupStyle.mainBg}>
         <MainBackground />
       </View>
-      <Question question={playground.questions} questionNumber={playground.questionNumber}/>
+      <Question question={playground.questions} questionNumber={playground.questionNumber} optionalStyle={{paddingTop: 60}}/>
       <QuestionTargets chooseTarget={(obj) => {
         socket.emit("@vote", {
           client_id: obj.client_id,

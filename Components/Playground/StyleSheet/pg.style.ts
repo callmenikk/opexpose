@@ -7,13 +7,11 @@ export const style = StyleSheet.create({
     backgroundColor: "#000",
     paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
     zIndex: 15,
-    display: "flex",
     alignItems: "center",
   },
   question_container: {
     width: "100%",
-    minHeight: 300,
-    paddingTop: 60,
+    minHeight: 200,
     paddingHorizontal: 20,
   },
   question: {
@@ -62,5 +60,5 @@ export const style = StyleSheet.create({
     borderWidth: 3,
     backgroundColor: "#131313",
     overflow: "hidden"
-  }
+  },
 })
