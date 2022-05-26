@@ -44,30 +44,30 @@ const ChoosePhotoModal: FC<PhotoProps> = ({ clientPhotos, closeModal, insertPhot
       </View>
       <FlatGrid
         itemDimension={200}
-        data={clientPhotos}
         spacing={10}
-        renderItem={({item}) => {
+        data={clientPhotos}
+        renderItem={({ item }) => {
           return (
-						<TouchableOpacity style={setupStyle.client_photo} key={item} onPress={() => {
+            <TouchableOpacity style={setupStyle.client_photo} key={item} onPress={() => {
               getBase64(item)
-              .then(base64 => insertPhoto(base64))
-              .catch(err => console.log(err))
+                .then(base64 => insertPhoto(base64))
+                .catch(err => console.log(err))
             }}>
-            <Image
-              source={{
-                uri: item,
-              }}
-              style={{ 
-                width: "100%",
-                height: "100%",
-                overflow: "hidden",
-                borderRadius: 10,
-              }}
-            />
-          </TouchableOpacity>
-					) 
+              <Image
+                source={{
+                  uri: item,
+                }}
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  overflow: "hidden",
+                  borderRadius: 10,
+                }}
+              />
+            </TouchableOpacity>
+          )
         }}
-      ></FlatGrid>
+      />
     </View>
   );
 };

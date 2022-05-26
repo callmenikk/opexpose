@@ -3,7 +3,7 @@ import { View } from 'react-native'
 import Card from './Card'
 import { style } from './StyleSheet/unvisible.style'
 
-const Results = () => {
+const ResultsUnvisible = () => {
   return (
     <View style={style.results_wrapper}>
       <Card />
@@ -12,4 +12,4 @@ const Results = () => {
   )
 } 
 
-export default Results
+export default ResultsUnvisible

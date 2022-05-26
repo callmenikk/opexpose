@@ -15,7 +15,7 @@ import host from "../../host.json"
 import { State as UserState} from '../../Reducers/Setup/userData'
 import Loader from '../Home/Loader'
 import Waiter from './Waiter'
-import Unvisible from './Results/Unvisible/Unvisible'
+import Results from './Results/Unvisible'
 
 const Playground = () => {
   const socket = io(host.host, {
@@ -49,7 +49,7 @@ const Playground = () => {
 
   return ( 
     <View style={style.container}>
-      <Unvisible />
+      <Results />
       {
         isLoading && <Loader />
       }

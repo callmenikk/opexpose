@@ -1,12 +1,13 @@
 import React from 'react'
 import { Text, TouchableOpacity, View } from 'react-native'
-import { style } from './StyleSheet/unvisible.style'
-import MainBackground from '../../../../utils/asset/MainBackground'
-import { setupStyle } from '../../../Setup/Stylesheet/Setup.style'
-import Question from '../../Question'
+import { style } from './Unvisible/StyleSheet/unvisible.style'
+import MainBackground from '../../../utils/asset/MainBackground'
+import { setupStyle } from '../../Setup/Stylesheet/Setup.style'
+import Question from '../Question'
 import { useSelector } from 'react-redux'
-import { State } from '../../../../Reducers/Playground/playground'
-import Results from './Results'
+import { State } from '../../../Reducers/Playground/playground'
+import ResultsUnvisible from './Unvisible/ResultsUnvisible'
+import ResultsVisible from './Visible/ResultsVisible'
 
 const Unvisible = () => {
   const playground = useSelector(
@@ -19,7 +20,8 @@ const Unvisible = () => {
         <MainBackground />
       </View>
       <Question question={playground.questions} questionNumber={playground.questionNumber} />
-      <Results />
+      {/* <ResultsUnvisible /> */}
+      <ResultsVisible />
       <View style={style.button_wrapper}>
         <TouchableOpacity style={style.start_btn}>
           <Text style={{

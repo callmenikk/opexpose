@@ -7,12 +7,9 @@ export const style = StyleSheet.create({
     backgroundColor: "#000",
     paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
     zIndex: 16,
-
   },
   results_wrapper: {
     width: Dimensions.get("window").width,
-    borderColor: "red",
-    // height: "100%",
     justifyContent: "space-between",
     display: "flex",
     flexDirection: "row",
