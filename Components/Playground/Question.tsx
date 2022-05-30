@@ -2,7 +2,7 @@ import { FC, useEffect, useState } from 'react'
 import { View, Text, StyleProp, ViewStyle } from 'react-native'
 import { State as UserState} from '../../Reducers/Setup/userData'
 import { io } from 'socket.io-client'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { State } from '../../Reducers/Playground/playground'
 import { style } from './StyleSheet/pg.style'
 import { useParams } from 'react-router-native'
@@ -23,6 +23,7 @@ const Question:FC<QuestionProps> = ({question, questionNumber, optionalStyle}) =
   const userData = useSelector( 
     (state: { userData: UserState }) => state.userData
   ); 
+  const dispatch = useDispatch()
   const [cancelRequest, setCancelRequest] = useState(false)
   const {id} = useParams()
   const playground = useSelector(
@@ -32,7 +33,6 @@ const Question:FC<QuestionProps> = ({question, questionNumber, optionalStyle}) =
   useEffect(() => {
     socket.on("@resultCallback", (msg) => {
       console.log(msg);
-      
 
       if(playground.owner_id !== userData.client_id) return
       if(cancelRequest) return
@@ -52,7 +52,7 @@ const Question:FC<QuestionProps> = ({question, questionNumber, optionalStyle}) =
             fontSize: 20,
             fontWeight: "bold",
             textAlign: "center"
-          }}>Question {questionNumber}/20</Text>
+          }} onPress={() => dispatch({type: "CLEAR_RESULTS"})}>Question {questionNumber}/20</Text>
         </View>
         <View style={style.question_section}>
           <Text style={{

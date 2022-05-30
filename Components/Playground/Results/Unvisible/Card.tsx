@@ -1,8 +1,15 @@
 import { FC } from 'react'
-import { View, StyleProp, ViewStyle, Image, Text } from 'react-native'
+import { View, Image, Text } from 'react-native'
 import { style } from './StyleSheet/unvisible.style'
 
-const Card:FC<{}> = ({}) => {
+interface CardProps {
+  profile_src: string,
+  username: string,
+  vote_count: number,
+  percentage: number
+}
+
+const Card:FC<CardProps> = ({profile_src, username, vote_count, percentage}) => {
   return (
     <View style={[style.user_card]}>
       <View style={style.image_wrapper}>
@@ -12,25 +19,25 @@ const Card:FC<{}> = ({}) => {
             height: "100%"
           }}
           source={{
-          uri: "https://cdn.discordapp.com/avatars/484717395722895360/894ee3a27bc7ae7fb9316e84d792d45b.png?size=4096"
+          uri: `data:image/jpeg;base64,${profile_src}`
         }}/>
       </View>
       <Text style={{
         color: "#FFF",
         fontWeight: "bold",
         marginTop: 10
-      }}>callmenikk</Text>
+      }}>{username}</Text>
       <Text style={{
         color: "#FFF",
         fontWeight: "bold",
         marginTop: 2,
         fontSize: 42
-      }}>64%</Text>
+      }}>{percentage}%</Text>
       <Text style={{
         color: "#858585",
         fontWeight: "bold",
         fontSize: 20
-      }}>2 votes</Text>
+      }}>{vote_count === 1 ? `${vote_count} voter`: `${vote_count} voters`}</Text>
     </View>
   )
 }

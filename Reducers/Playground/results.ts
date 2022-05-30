@@ -12,7 +12,7 @@ export type ParticipantType = {
   }[]
 }
 
-type State = {
+export type State = {
   show: boolean,
   visibility: boolean,
   first_participant: ParticipantType,
@@ -45,7 +45,7 @@ const inital: State = {
 }
 
 type Action = {
-  type: "SET_SHOW" | "SET_RESULTS",
+  type: "SET_SHOW" | "SET_RESULTS" | "CLEAR_RESULTS",
   payload: {
     first_participant?: ParticipantType,
     second_participant?: ParticipantType,
@@ -69,6 +69,9 @@ export const resultsReducer = (state: State = inital, action: Action): State => 
         first_participant: action.payload.first_participant!,
         second_participant: action.payload.second_participant!
       }
+    }
+    case "CLEAR_RESULTS": {
+      return inital
     }
     default: return state
   }

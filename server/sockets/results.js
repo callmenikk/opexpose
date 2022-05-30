@@ -1,4 +1,4 @@
-const {party} = require("../rooms")
+const { party } = require("../rooms")
 
 module.exports = (socket) => {
   socket.on("@result", (room_id) => {
@@ -6,7 +6,7 @@ module.exports = (socket) => {
 
     const firstTarget = party[findParty].targets[0]
     const secondTarget = party[findParty].targets[1]
-    
+
     const targetToken1 = firstTarget.userToken
     const targetToken2 = secondTarget.userToken
 
@@ -17,31 +17,78 @@ module.exports = (socket) => {
     const participants = party[findParty].online_users.length
 
     const percentage1 = ((findFirstVoted.length / participants) * 100).toFixed(1)
-    const percentage2 = ((findSecondVoted.length / participants)  * 100).toFixed(1)
+    const percentage2 = ((findSecondVoted.length / participants) * 100).toFixed(1)
 
-    if(!party[findParty].visibilty){
-      console.log("results are ready")
+    if (!party[findParty].visibility) {
+      const firstParticipantData = {
+        user: {
+          username: firstTarget.username,
+          profile_src: firstTarget.profile_src
+        },
+        percentage: percentage1,
+        total_vote: findFirstVoted.length
+      }
 
-      return socket.broadcast.emit("@result_done", {
+      const secondParticipantData = {
+        user: {
+          username: secondTarget.username,
+          profile_src: secondTarget.profile_src
+        },
+        percentage: percentage2,
+        total_vote: findSecondVoted.length
+      }
+
+      socket.broadcast.emit("@result_done", {
+        visibility: party[findParty].visibility,
+        first_participant: firstParticipantData,
+        second_participant: secondParticipantData
+      })
+    } else {
+
+      let firstVoters = []
+      let secondVoters = []
+
+      for (let i = 0; i < findFirstVoted.length; i++) {
+        const whoIsVoter = party[findParty].online_users.find(user => user.userToken === findFirstVoted[i].voter)
+
+        firstVoters.push({
+          username: whoIsVoter.username,
+          profile_src: whoIsVoter.profile_src
+        })
+      }
+
+      for (let i = 0; i < findSecondVoted.length; i++) {
+        const whoIsVoter = party[findParty].online_users.find(user => user.userToken === findSecondVoted[i].voter)
+        secondVoters.push({
+          username: whoIsVoter.username,
+          profile_src: whoIsVoter.profile_src
+        })
+      }
+
+      socket.broadcast.emit("@result_done", {
+        visibility: party[findParty].visibility,
         first_participant: {
           user: {
-            client_id: firstTarget.userToken,
             username: firstTarget.username,
             profile_src: firstTarget.profile_src
           },
-          percentage: percentage1,
+          whoVoted: firstVoters,
           total_vote: findFirstVoted.length
         },
-        second_participant: { 
+        second_participant: {
           user: {
-            client_id: secondTarget.userToken,
             username: secondTarget.username,
             profile_src: secondTarget.profile_src
           },
-          percentage: percentage2,
+          whoVoted: secondVoters,
           total_vote: findSecondVoted.length
         },
       })
+
+
     }
-  })    
-}        
+
+
+
+  })
+}

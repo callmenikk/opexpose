@@ -22,15 +22,15 @@ const Card: FC<CardProps> = ({profile_src, totalVotes, voters}) => {
               height: "100%"
             }}
             source={{
-            uri: profile_src
+            uri: `data:image/jpeg;base64,${profile_src}`
           }}/>
         </View>
         <Text style={{
           color: "#FFF",
           marginTop: 10
-        }}>{totalVotes} Voters</Text>
+        }}>{totalVotes === 1 ? `${totalVotes} Voter` : `${totalVotes} Voters`}</Text>
       </View>
-      <Voters voters={voters}/>
+      <Voters voters={voters as any}/>
     </View>
   )
 }

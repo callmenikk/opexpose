@@ -4,7 +4,7 @@ import { style } from './StyleSheet/pg.style'
 
 const { width } = Dimensions.get("window")
 
-interface TargetProps {
+export interface TargetProps {
   client_id: string,
   username: string,
   profile_src: string,

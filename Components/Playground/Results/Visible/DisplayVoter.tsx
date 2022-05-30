@@ -13,7 +13,7 @@ const DisplayVoter: FC<{ username: string, profile_src: string }> = ({ username,
           height: "100%"
         }}
         source={{
-          uri: profile_src
+          uri: `data:image/jpeg;base64,${profile_src}`
         }}/>
       </View>
       <Text style={{

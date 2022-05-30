@@ -117,24 +117,6 @@ const Home = () => {
           openCreate &&
           <Dashboard closeCreate={() => setOpenCreate(false)} setLoad={(bool) => setIsLoading(bool)}/>
         }
-        {/* THIS IS FOR TESTING */}
-        <TouchableOpacity style={{
-          width: 200,
-          height: 50,
-          backgroundColor: "yellow",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          borderRadius: 100
-        }}
-        onPress={() => {
-          navigate("/playground/812732")
-        }}
-        >
-          <Text style={{
-            fontWeight: "bold"
-          }}>ONLY DEVELOPER ⚠️</Text>
-        </TouchableOpacity>
       </View>
   );
 };
