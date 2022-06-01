@@ -31,7 +31,7 @@ const Code: FC<{code: string, openWarn: (text: string) => void}> = ({code, openW
   useEffect(() => {
     socket.emit("listen-room", id)
 
-    socket.on("new_user", (user) => {
+    socket.off("new_user").on("new_user", (user) => {
       dispatch({ type: "ADD_PLAYER", payload: { userToken: user.userToken, profile_src: user.profile_src, username: user.username } })
     })
 

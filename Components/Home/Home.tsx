@@ -20,7 +20,8 @@ const Home = () => {
   const userData = useSelector( 
     (state: { userData: State }) => state.userData
   ); 
-  
+    
+
   const socket = io(host.host, { transports: ['websocket'] })
   
   //connects socket 
@@ -76,7 +77,9 @@ const Home = () => {
           <MainBackground />
         </View>
         <View style={homeStyle.user_data_wrapper}>
-          <TouchableOpacity style={homeStyle.user_avatar}>
+          <TouchableOpacity style={homeStyle.user_avatar} onPress={() => {
+            socket.emit("@next_question", "12asd3213")
+          }}>
             <Image 
             style={{
               width: "100%",

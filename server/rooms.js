@@ -1,9 +1,9 @@
 let rooms = [{
   room_id: "000000",
   mode: "SUSSY_BAKA",
-  visibility: true,
-  owner_id: "rx7pqs99.011co4d5.4dhe9lys", 
-  online_users: [],
+  visibility: false,
+  owner_id: "2gxovrne.bna82c3x.dcja7gq0",  
+  online_users: [], 
   question: 1
 }]
 let party = [] 

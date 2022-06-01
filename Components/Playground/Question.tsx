@@ -41,6 +41,22 @@ const Question:FC<QuestionProps> = ({question, questionNumber, optionalStyle}) =
       setCancelRequest(true)        
       
     })
+
+    socket.on("@set_next_question", async (next_question) => {
+      dispatch({type: "SET_QUESTION", payload: {
+        questions: await next_question.questionText,
+        targets: await next_question.targets,
+        questionNumber: await next_question.question,
+        owner_id:await next_question.owner_id
+      }})
+      dispatch({type: "SET_SHOW", payload: {
+        show: false
+      }})
+    })
+
+    return () => {
+      socket.removeListener("@resultCallback")
+    }
   }, [])
 
   return (

@@ -28,7 +28,7 @@ module.exports = (socket) => {
     const totalMembers = party[findParty].online_users.length  
      
     if(totalVoters === totalMembers){ 
-      socket.broadcast.emit("@resultCallback", "  ")
+      socket.broadcast.emit("@resultCallback", "done")
     }
   })
 }   

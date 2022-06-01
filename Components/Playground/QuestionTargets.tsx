@@ -25,8 +25,6 @@ const QuestionTargets: FC<QuestionProps> = ({ chooseTarget, closeWaiting }) => {
     socket.off("@result_done").on("@result_done", (results) => {
       console.log("request received");
 
-      console.log(results.first_participant.whoVoted)
-
       dispatch({
         type: "SET_RESULTS", payload: {
           visibility: !results.visibility,
@@ -39,7 +37,9 @@ const QuestionTargets: FC<QuestionProps> = ({ chooseTarget, closeWaiting }) => {
       closeWaiting()
     })
 
-    return () => { socket.off("@result_done") }
+    return () => { 
+      socket.off("@result_done") 
+    }
 
 
   }, [])

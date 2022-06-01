@@ -16,7 +16,7 @@ import host from "../../host.json"
 import { State as UserState } from '../../Reducers/Setup/userData'
 import Loader from '../Home/Loader'
 import Waiter from './Waiter'
-import Results from './Results/Unvisible'
+import Results from './Results/Results'
 import { ChooseTargetProps, TargetProps } from './ChooseTarget'
 
 
@@ -35,7 +35,6 @@ const Playground = () => {
     socket.connect()
 
     socket.on('connect', () => {
-      console.log('connected')
       setIsLoading(false)
     });
 
@@ -56,7 +55,7 @@ const Playground = () => {
 
   return (
     <View style={style.container}>
-      {results.show && <Results />}
+      {results.show && <Results socket={socket}/>}
       {isLoading && <Loader />}
       {isWaiting && <Waiter />}
       <View style={setupStyle.mainBg}>
