@@ -26,7 +26,7 @@ const Code: FC<{code: string, openWarn: (text: string) => void}> = ({code, openW
     socket.connect()
     socket.emit("@port_open")
     setSocketConnected(true)
-  }, [socket])
+  }, [])
 
   useEffect(() => {
     socket.emit("listen-room", id)

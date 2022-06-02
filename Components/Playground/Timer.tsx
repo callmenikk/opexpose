@@ -1,9 +1,26 @@
 import { useEffect, useState } from 'react'
 import { View } from 'react-native'
 import { style } from './StyleSheet/pg.style'
+import { State } from '../../Reducers/Playground/playground'
+import { useSelector } from 'react-redux'
 
 const Timer = () => {
   const [timerNumber, setTimerNumber] = useState<number>(100)
+  const playground = useSelector(
+    (state: { playground: State }) => state.playground
+  );
+
+  useEffect(() => {
+    let mounted = true
+
+    if(mounted){
+      setTimerNumber(100)
+    }
+
+    return () => {
+      mounted = false
+    }
+  }, [playground.questions])
 
   useEffect(() => {
     const timer = setInterval(() => {

@@ -4,8 +4,8 @@ let rooms = [{
   visibility: false,
   owner_id: "2gxovrne.bna82c3x.dcja7gq0",  
   online_users: [], 
-  question: 1
-}]
+  question: 1 
+}] 
 let party = [] 
 
-module.exports = { rooms, party }
+module.exports = { rooms, party } 

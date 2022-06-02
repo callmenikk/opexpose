@@ -28,19 +28,34 @@ const Playground = () => {
   const userData = useSelector((state: { userData: UserState }) => state.userData);
   const playground = useSelector((state: { playground: State }) => state.playground);
   const [isWaiting, setIsWaiting] = useState(false)
+  const [cancelRequest, setCancelRequest] = useState(false)
 
   useEffect(() => {
-    if(!isLoading) return
-    
-    socket.connect()
+    if (!isLoading) return
 
+    socket.connect()
+    
     socket.on('connect', () => {
       setIsLoading(false)
     });
 
     socket.emit('@listen', id)
 
-  }, [socket])
+  }, [])
+
+  useEffect(() => {
+    socket.on("@resultCallback", (msg) => {
+
+      if (playground.owner_id !== userData.client_id) return
+
+      if (msg === "done") {
+        if (cancelRequest) return
+        socket.emit("@result", id)
+      }
+
+      setCancelRequest(true)
+    })
+  }, [])
 
   const chooseTarget = (obj: TargetProps) => {
     socket.emit("@vote", {
@@ -55,7 +70,7 @@ const Playground = () => {
 
   return (
     <View style={style.container}>
-      {results.show && <Results socket={socket}/>}
+      {results.show && <Results socket={socket} />}
       {isLoading && <Loader />}
       {isWaiting && <Waiter />}
       <View style={setupStyle.mainBg}>

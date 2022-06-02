@@ -1,29 +1,27 @@
 const { party } = require("../rooms")
 const questions = require("../configs/questions.json")
+const randomUsers = require("../utils/randomUsers")
 
 module.exports = (socket) => { 
-  socket.on("@next_question", (room_id) => {
-    console.log(room_id);
-    // const findParty = party.findIndex(async room => await room.room_id == room_id)  
- 
-    // const randomQuestion = Math.floor(Math.random() * questions[findParty.mode].question.length)
+  socket.on("@next_question", (room_id) => { 
+    const partyIndex = party.findIndex(async room => await room.room_id == room_id)  
+    const partyRoom = party[partyIndex] 
   
+    const randomQuestion = Math.floor(Math.random() * questions[partyRoom.mode].question.length)
 
-    // const prepared = {
-    //   ...findRoom,
-    //   question: party[findParty].question++,
-    //   questionText: questions[findParty.mode].question[randomQuestion],
-    //   targets: randomUsers(party[findParty].online_users),
-    //   voters: []
-    // }   
+    const prepared = {
+      ...partyRoom, 
+      question: ++party[partyIndex].question,
+      questionText: questions[partyRoom.mode].question[randomQuestion],
+      targets: randomUsers(party[partyIndex].online_users),
+      voters: []
+    }   
 
-    // console.log(prepared);
+    party[partyIndex].targets = prepared.targets
+    party[partyIndex].voters = []
+    party[partyIndex].questionText = prepared.questionText
+    party[partyIndex].question++
 
-    // party[findParty].targets = prepared.targets
-    // party[findParty].voters = prepared.voters
-    // party[findParty].questionText = prepared.questionText
-    // party[findParty].question++
-
-    // socket.broadcast.emit("@set_next_question", prepared)
+    socket.broadcast.emit("@set_next_question", prepared)
   })
-}
+}  

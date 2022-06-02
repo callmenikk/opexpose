@@ -30,12 +30,10 @@ const Home = () => {
 
     socket.emit("@port_open")
     
-    socket.on("@response", async (status) => {       
-      if(await status){
+    socket.on("connect", () => {       
         setIsLoading(false)
-      }
     })
-  }, [socket])
+  }, [])
 
   
   const _getUserData = async () => {

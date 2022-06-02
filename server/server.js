@@ -11,9 +11,9 @@ const joinMember = require("./sockets/join_room")
 const listen = require("./sockets/listen")
 const leaveRoom = require("./sockets/leave_member")
 const startParty = require("./sockets/start_party")
-const vote_target = require("./sockets/vote_target")
+const vote_target = require("./sockets/vote_target") 
 const nextQuestion = require('./sockets/next_question')
-
+ 
 const port = process.env.PORT || 3000
 
 app.use(cors())
@@ -21,14 +21,14 @@ app.use(express.json({ limit: '20mb' }))
 app.use(express.urlencoded({
   extended: true  
 }));
-
+ 
 const io = require("socket.io")(http, { 
   cors: {
     origin: "http://localhost:3000",
     methods: ["GET", "POST"]
   },
   maxHttpBufferSize: 1e8, 
-  transports: ['websocket'],
+  transports: ['websocket'], 
   pingTimeout: 30000
 });
 
