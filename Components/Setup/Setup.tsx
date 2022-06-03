@@ -25,7 +25,7 @@ const Setup = () => {
   }
 
   useEffect(() => {
-  _getUserStore()
+   _getUserStore()
   }, [])
 
   return (

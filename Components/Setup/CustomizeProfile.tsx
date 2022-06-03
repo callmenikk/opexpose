@@ -62,14 +62,6 @@ const CustomizeProfile: FC<{triggerModal: (bool: boolean, text: string) => void}
     await requestPermission();
 
     return status?.granted;
-  //   const permission: Permission = PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE;
-  //   const hasPermission: boolean = await PermissionsAndroid.check(permission);
-  //   if (hasPermission) {
-  //   	return true
-  //   }
-
-  //   const status = await PermissionsAndroid.request(permission);
-  //   return status === PermissionsAndroid.RESULTS.GRANTED;
   };
 
   const savePicture = async () => {

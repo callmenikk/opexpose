@@ -76,7 +76,7 @@ export const setupStyle = StyleSheet.create({
     width: Dimensions.get("window").width,
     height:(Dimensions.get("window").height - 220),
     backgroundColor: "#0E0E0E",
-    zIndex: 12,
+    zIndex: 30,
     position: "absolute",
     bottom: 0,
     borderTopLeftRadius: 20,

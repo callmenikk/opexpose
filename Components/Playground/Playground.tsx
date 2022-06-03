@@ -46,14 +46,13 @@ const Playground = () => {
   useEffect(() => {
     socket.on("@resultCallback", (msg) => {
 
+
       if (playground.owner_id !== userData.client_id) return
 
       if (msg === "done") {
-        if (cancelRequest) return
         socket.emit("@result", id)
       }
 
-      setCancelRequest(true)
     })
   }, [])
 

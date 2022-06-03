@@ -26,7 +26,7 @@ const QuestionTargets: FC<QuestionProps> = ({ chooseTarget, closeWaiting }) => {
       console.log("request received");
 
       dispatch({
-        type: "SET_RESULTS", payload: {
+        type: "SET_RESULTS", payload: { 
           visibility: !results.visibility,
           first_participant: results.first_participant,
           second_participant: results.second_participant

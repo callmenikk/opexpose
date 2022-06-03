@@ -75,9 +75,7 @@ const Home = () => {
           <MainBackground />
         </View>
         <View style={homeStyle.user_data_wrapper}>
-          <TouchableOpacity style={homeStyle.user_avatar} onPress={() => {
-            socket.emit("@next_question", "12asd3213")
-          }}>
+          <TouchableOpacity style={homeStyle.user_avatar} onPress={() => navigate("/settings")}>
             <Image 
             style={{
               width: "100%",
